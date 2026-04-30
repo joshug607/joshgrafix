@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josh Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0f172a;color:white;scroll-behavior:smooth}
+
+/* NAV */
+nav{position:fixed;width:100%;padding:15px 80px;display:flex;justify-content:space-between;align-items:center;background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);box-shadow:0 5px 20px rgba(0,0,0,0.3);z-index:1000;}
+.logo img{width:40px;height:40px;object-fit:contain;border-radius:6px;}
+nav ul{display:flex;list-style:none;gap:30px;}
+nav a{color:white;text-decoration:none;font-weight:500;position:relative;}
+nav a::after{content:"";position:absolute;width:0%;height:2px;background:orange;left:0;bottom:-5px;transition:0.3s;}
+nav a:hover::after{width:100%;}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;z-index:1100;}
+.hamburger span{display:block;width:25px;height:2px;background:white;border-radius:2px;transition:all 0.3s ease;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media(max-width:768px){
+  nav{padding:15px 20px;}
+  .hamburger{display:flex;}
+  nav ul{
+    display:none;
+    position:fixed;
+    top:65px;left:0;right:0;
+    background:rgba(10,16,30,0.98);
+    backdrop-filter:blur(16px);
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+    padding:12px 0 20px;
+    border-bottom:1px solid rgba(255,165,0,0.2);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+  nav ul.open{display:flex;}
+  nav ul li{width:100%;text-align:center;}
+  nav ul li a{display:block;padding:14px 20px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+  nav ul li:last-child a{border-bottom:none;}
+  nav ul li a::after{display:none;}
+  nav ul li a:hover{color:orange;background:rgba(255,165,0,0.06);}
+}
+
+/* HERO */
+#home{display:flex;justify-content:center;align-items:center;height:100vh}
+.hero{display:flex;justify-content:space-between;align-items:center;width:90%;max-width:1200px;padding:60px;border-radius:20px;background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);box-shadow:0 10px 40px rgba(0,0,0,0.4);}
+.left h3{color:#ccc}
+.left h1{font-size:3rem;color:orange;margin:10px 0}
+.btn{padding:12px 25px;border-radius:6px;text-decoration:none;font-weight:500;transition:0.3s;display:inline-block;}
+.primary{background:linear-gradient(135deg,orange,#ffb347);color:black;box-shadow:0 5px 15px rgba(255,165,0,0.4);}
+.primary:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(255,165,0,0.6);}
+.stats{display:flex;gap:30px;margin-top:20px;}
+.stats h2{color:orange}
+.right img{width:320px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+
+/* SERVICES */
+#services{padding:100px 20px;text-align:center}
+.services-two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px;}
+.service-column{background:#1e293b;padding:25px;border-radius:10px;transition:0.3s;}
+.service-column:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 0 20px rgba(255,165,0,0.3);}
+.service-column h3{margin-bottom:20px;color:orange}
+.service-card{display:flex;align-items:center;gap:15px;background:#0f172a;padding:15px;margin:10px 0;border-radius:8px;transition:0.3s;}
+.service-card i{color:orange}
+.service-card:hover{background:rgba(255,255,255,0.05);transform:translateX(5px);}
+
+/* PORTFOLIO */
+#portfolio {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+}
+
+.portfolio-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,165,0,0.1);
+  background: #ffffff;
+  aspect-ratio: 3 / 4;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.4s ease;
+  background: #ffffff;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.07);
+}
+
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-overlay span {
+  color: white;
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: rgba(255,165,0,0.85);
+  color: black;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+@media(max-width:600px){
+  .portfolio-grid { grid-template-columns: 1fr; }
+}
+
+/* TESTIMONIALS */
+#testimonials{text-align:center;padding:100px 20px;background:#020617;}
+.testimonials-container{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin-top:40px;}
+.testi-card{background:#1e293b;padding:25px;border-radius:12px;max-width:300px;transition:0.3s;box-shadow:0 10px 25px rgba(0,0,0,0.4);}
+.testi-card:hover{transform:translateY(-10px)}
+.testi-card img{width:70px;height:70px;border-radius:50%;margin-bottom:15px;border:3px solid orange;}
+.testi-card h4{color:orange;margin-bottom:10px}
+.testi-card p{font-size:14px;color:#ccc}
+
+/* ===== CONTACT - UPGRADED ===== */
+#contact {
+  padding: 100px 20px;
+  background: #020617;
+  text-align: center;
+}
+
+#contact h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+#contact h2 span {
+  color: orange;
+}
+
+.contact-subtitle {
+  color: #94a3b8;
+  margin-bottom: 60px;
+  font-size: 0.95rem;
+}
+
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Contact Info Panel */
+.contact-info-panel {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 40px 32px;
+  border: 1px solid rgba(255,165,0,0.1);
+}
+
+.contact-info-panel h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: orange;
+}
+
+.contact-info-panel p {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.contact-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contact-detail-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(255,165,0,0.12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: orange;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.contact-detail-text h4 {
+  font-size: 0.8rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.contact-detail-text a,
+.contact-detail-text p {
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.contact-detail-text a:hover {
+  color: orange;
+}
+
+.contact-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.contact-socials a {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,165,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.contact-socials a:hover {
+  background: orange;
+  border-color: orange;
+  color: black;
+  transform: translateY(-3px);
+}
+
+/* Contact Form Panel */
+.contact-form-panel {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 40px 36px;
+  border: 1px solid rgba(255,165,0,0.1);
+}
+
+.contact-form-panel h3 {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: white;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 7px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  transition: 0.3s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: orange;
+  box-shadow: 0 0 0 3px rgba(255,165,0,0.12);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #475569;
+}
+
+.form-group select option {
+  background: #1e293b;
+}
+
+.form-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, orange, #ffb347);
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.form-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,165,0,0.4);
+}
+
+.form-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-status-msg {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  text-align: center;
+  min-height: 20px;
+}
+
+.form-status-msg.success { color: #10b981; }
+.form-status-msg.error   { color: #f87171; }
+
+/* ===== FOOTER - UPGRADED ===== */
+footer {
+  background: #020617;
+  border-top: 1px solid rgba(255,165,0,0.15);
+  padding: 0;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr;
+  gap: 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 48px;
+}
+
+.footer-brand p {
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin: 14px 0 24px;
+  max-width: 280px;
+}
+
+.footer-brand-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+}
+
+.footer-brand-name span {
+  color: orange;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-socials a:hover {
+  background: orange;
+  border-color: orange;
+  color: black;
+  transform: translateY(-3px);
+}
+
+.footer-col h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-col h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 2px;
+  background: orange;
+  border-radius: 2px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col ul li a {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-col ul li a::before {
+  content: '›';
+  color: orange;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.footer-col ul li a:hover {
+  color: orange;
+  padding-left: 4px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #1e293b;
+  padding: 20px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  color: #475569;
+  font-size: 0.82rem;
+}
+
+.footer-bottom p span {
+  color: orange;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  color: #475569;
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-bottom-links a:hover {
+  color: orange;
+}
+
+/* WHATSAPP */
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25D366;color:white;padding:15px;border-radius:50%;font-size:22px;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,0.4);transition:0.3s;z-index:999;}
+.whatsapp:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,0.6);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{flex-direction:column;text-align:center}
+  .services-two-col{grid-template-columns:1fr}
+  .contact-wrapper{grid-template-columns:1fr}
+  .footer-main{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+  nav{padding:15px 20px;}
+  .footer-main{grid-template-columns:1fr;gap:32px;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><img src="logo copy1.png" alt="Logo"></div>
+  <ul id="nav-menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero">
+    <div class="left">
+      <p>Hi I am</p>
+      <h3>JOSH GRAFIX</h3>
+      <h1 id="typing"></h1>
+      <br>
+      <a href="#contact" class="btn primary">Hire Me</a>
+      <div class="stats">
+        <div><h2 id="exp">0</h2><p>Experience</p></div>
+        <div><h2 id="proj">0</h2><p>Projects</p></div>
+        <div><h2 id="cli">0</h2><p>Clients</p></div>
+      </div>
+    </div>
+    <div class="right"><img src="ggg.jfif"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <h2>My Services</h2>
+  <div class="services-two-col">
+    <div class="service-column">
+      <h3>🎨 Graphics Design</h3>
+      <div class="service-card"><i class="fas fa-pen-nib"></i><div><h4>Logo Design</h4><p>Creative brand logos</p></div></div>
+      <div class="service-card"><i class="fas fa-image"></i><div><h4>Posters & Banners</h4><p>Marketing visuals</p></div></div>
+      <div class="service-card"><i class="fas fa-palette"></i><div><h4>Brand Identity</h4><p>Full branding kits</p></div></div>
+    </div>
+    <div class="service-column">
+      <h3>💻 Web Design & Development</h3>
+      <div class="service-card"><i class="fas fa-laptop-code"></i><div><h4>Website Design</h4><p>Modern UI/UX</p></div></div>
+      <div class="service-card"><i class="fas fa-code"></i><div><h4>Frontend Development</h4><p>Fast responsive sites</p></div></div>
+      <div class="service-card"><i class="fas fa-tools"></i><div><h4>Maintenance</h4><p>Ongoing updates</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <h2>Our Work and Clients</h2>
+  <p style="color:#94a3b8;margin-top:8px;font-size:0.95rem;">A selection of my recent work</p>
+
+  <div class="portfolio-grid">
+
+    <div class="portfolio-item">
+      <img src="tru.jfif" alt="Project 1">
+      <div class="portfolio-overlay"><span>Computer Training</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="exellent logo-01.png" alt="Project 2">
+      <div class="portfolio-overlay"><span>Logo Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="uboxy.png" alt="Project 3">
+      <div class="portfolio-overlay"><span>Our Partner</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="uboxy-holiday-final.png" alt="Project 4">
+      <div class="portfolio-overlay"><span>Poster Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="BXF-01.png" alt="Project 5">
+      <div class="portfolio-overlay"><span>Company ID Design </span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="TWINS 1.png" alt="Project 6">
+      <div class="portfolio-overlay"><span>Social Media</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="Bianca 1.png" alt="Project 7">
+      <div class="portfolio-overlay"><span>Poster Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="banner.png" alt="Project 8">
+      <div class="portfolio-overlay"><span>Banner Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="Wilson card.png" alt="Project 9">
+      <div class="portfolio-overlay"><span>Wedding Card Designs</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="JOSH.png" alt="Project 10">
+      <div class="portfolio-overlay"><span>Brand Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="conm.png" alt="Project 11">
+      <div class="portfolio-overlay"><span>Business Card</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3" alt="Project 12">
+      <div class="portfolio-overlay"><span>Social Media</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d" alt="Project 13">
+      <div class="portfolio-overlay"><span>Graphics Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb" alt="Project 14">
+      <div class="portfolio-overlay"><span>Brand Identity</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="Capture.JPG" alt="Project 15">
+      <div class="portfolio-overlay"><span>Web Design</span></div>
+    </div>
+
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e" alt="Project 16">
+      <div class="portfolio-overlay"><span>UI Design</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h2>Client Testimonials</h2>
+  <div class="testimonials-container">
+    <div class="testi-card">
+      <img src="DGFRTYHT.png">
+      <h4>Client</h4>
+      <p>"Amazing work! My brand looks professional now."</p>
+    </div>
+    <div class="testi-card">
+      <img src="fine.png">
+      <h4>Bianca</h4>
+      <p>"Fast delivery and clean design. Highly recommend!"</p>
+    </div>
+    <div class="testi-card">
+      <img src="kat.png">
+      <h4>Steven Owen</h4>
+      <p>"Creative and reliable designer. Will work again."</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT - UPGRADED -->
+<section id="contact">
+  <h2>Get In <span>Touch</span></h2>
+  <p class="contact-subtitle">Have a project in mind? Let's create something great together.</p>
+
+  <div class="contact-wrapper">
+
+    <!-- Info Panel -->
+    <div class="contact-info-panel">
+      <h3>Let's Talk</h3>
+      <p>I'm available for freelance projects, collaborations, and full-time opportunities. Reach out and I'll get back to you within 24 hours.</p>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+        <div class="contact-detail-text">
+          <h4>Email</h4>
+          <a href="mailto:joshug1000@gmail.com">joshug1000@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><i class="fab fa-whatsapp"></i></div>
+        <div class="contact-detail-text">
+          <h4>WhatsApp</h4>
+          <a href="https://wa.me/256783756437">+256 783 756 437</a>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="contact-detail-text">
+          <h4>Location</h4>
+          <p>Uganda</p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+        <div class="contact-detail-text">
+          <h4>Availability</h4>
+          <p>Mon – Sat, 8am – 8pm EAT</p>
+        </div>
+      </div>
+
+      <div class="contact-socials">
+        <a href="https://www.instagram.com/josh_grafix01?igsh=MWQ0em13dWJ1bWU1bQ==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61572849025397" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/kappa_josh" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+
+        <a href="https://wa.me/256783756437" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="contact-form-panel">
+      <h3>Send a Message</h3>
+      <form id="form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="user_name">Your Name</label>
+            <input type="text" id="user_name" name="user_name" placeholder="Josh UG" required>
+          </div>
+          <div class="form-group">
+            <label for="user_email">Email Address</label>
+            <input type="email" id="user_email" name="user_email" placeholder="joshug1000@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="user_phone">Phone (optional)</label>
+            <input type="tel" id="user_phone" name="user_phone" placeholder="+256 700 000 000">
+          </div>
+          <div class="form-group">
+            <label for="service_type">Service Needed</label>
+            <select id="service_type" name="service_type">
+              <option value="" disabled selected>Select a service</option>
+              <option value="logo">Logo Design</option>
+              <option value="branding">Brand Identity</option>
+              <option value="poster">Poster / Banner</option>
+              <option value="web-design">Website Design</option>
+              <option value="web-dev">Web Development</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="Project Inquiry">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, budget, and timeline..." required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit-btn" id="submit-btn">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+        <p class="form-status-msg" id="form-status"></p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER - UPGRADED -->
+<footer>
+  <div class="footer-main">
+
+    <!-- Brand Column -->
+    <div class="footer-brand">
+      <div class="footer-brand-name">Josh <span>Grafix</span></div>
+      <p>Creative graphics designer and web developer based in Uganda. Turning ideas into stunning visuals and powerful digital experiences.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/josh_grafix01?igsh=MWQ0em13dWJ1bWU1bQ==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61572849025397" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/kappa_josh" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+       
+        <a href="https://wa.me/256783756437" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Logo Design</a></li>
+        <li><a href="#services">Brand Identity</a></li>
+        <li><a href="#services">Posters & Banners</a></li>
+        <li><a href="#services">Website Design</a></li>
+        <li><a href="#services">Web Development</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <p>© 2026 <span>Josh Grafix</span>. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#contact">Hire Me</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/256783756437" class="whatsapp" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+
+hamburger.addEventListener('click', () => {
+  const isOpen = navMenu.classList.toggle('open');
+  hamburger.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+
+// Close menu when a nav link is clicked
+navMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+  });
+});
+
+// Typing effect
+const text = "Graphics & Web Designing";
+let i = 0;
+function type() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type, 100);
+  }
+}
+type();
+
+// Counters
+function counter(id, target) {
+  let c = 0;
+  let int = setInterval(() => {
+    c++;
+    document.getElementById(id).innerText = c + "+";
+    if (c >= target) clearInterval(int);
+  }, 30);
+}
+window.onload = () => {
+  counter("exp", 5);
+  counter("proj", 20);
+  counter("cli", 80);
+};
+
+// EmailJS
+(function () { emailjs.init("YOUR_PUBLIC_KEY"); })();
+
+document.getElementById("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const btn = document.getElementById("submit-btn");
+  const status = document.getElementById("form-status");
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+  emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+    .then(() => {
+      status.textContent = "✓ Message sent! I'll get back to you within 24 hours.";
+      status.className = "form-status-msg success";
+      this.reset();
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      setTimeout(() => { status.textContent = ""; status.className = "form-status-msg"; }, 6000);
+    })
+    .catch(() => {
+      status.textContent = "✗ Something went wrong. Please try WhatsApp instead.";
+      status.className = "form-status-msg error";
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+    });
+});
+</script>
+</body>
+</html>
